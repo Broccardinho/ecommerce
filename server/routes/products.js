@@ -12,4 +12,10 @@ router.get('/', async (req, res) => {
     })
 })
 
+router.get('/products', async (req, res) => {
+    Product.find({}, (err, data) => {
+        res.json(data)
+    })
+})
+
 module.exports = router

@@ -12,7 +12,9 @@ app.use(require(`cors`)({credentials: true, origin: process.env.LOCAL_HOST}))
 
 
 // Routers
-// app.use(require('./routes/products'))
+// const productRoutes = require('./routes/products')
+// app.use('/api/products', productRoutes)
+app.use(require(`./routes/products`))
 
 
 // Port
