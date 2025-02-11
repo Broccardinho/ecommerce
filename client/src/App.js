@@ -5,6 +5,7 @@ import ProductsPage from "./components/productPage"
 import Register from "./components/Register"
 import Login from "./components/Login"
 import Products from "./components/Products";
+import Header from "./components/Header"
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
@@ -19,9 +20,7 @@ export default class App extends Component
         return (
             <BrowserRouter>
 
-                <header className="App-header">
-
-                </header>
+                <Header />
                 <div className="container">
                     <Switch>
                         <Route exact path="/" component={Home} />
