@@ -8,6 +8,7 @@ export default class Login extends Component {
         this.state = {
             email: "",
             password: "",
+            isLoggedIn: false,
             errorMessage: "",
         }
     }
@@ -15,37 +16,62 @@ export default class Login extends Component {
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
-    handleSubmit = async (e) => {
+
+    handleSubmit = (e) => {
         e.preventDefault();
 
-        const {email, password} = this.state;
-
-        if (!email || !password) {
-            this.setState({errorMessage: "Please fill in all fields"});
-            return;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            this.setState({errorMessage: "Please enter a valid email address"});
-            return;
-        }
-
-        try {
-            const response = await axios.post(`${SERVER_HOST}/login`, email, password);
-
-            sessionStorage.setItem("authToken", response.data.token);
-            sessionStorage.setItem("user", JSON.stringify(response.data.user));
-
-            window.location.href = "/"
-        } catch (err) {
-            this.setState({errorMessage: "Invalid email address or password"});
-        }
-
-        console.log("Form submitted", {email, password});
-
-        this.setState({email: "", password: ""});
+        axios.post(`${SERVER_HOST}/users/login/${this.state.email}/${this.state.password}`)
+            .then(res => {
+                if(res.data){
+                    if(res.data.errorMessage){
+                        console.log(res.data.errorMessage)
+                    }else{
+                        console.log({isLoggedIn: true})
+                    }
+                }else{
+                    sessionStorage.setItem("authToken",res.data.token)
+                    sessionStorage.setItem("user", JSON.stringify(res.data.user))
+                    this.setState({isLoggedIn:true})
+                    console.log("Login successful")
+                    window.location.href ="/"
+                }
+            })
+            .catch(() => {
+                this.setState({errorMessage:"Server error, please try again later"})
+            })
     }
+
+    // handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //
+    //     const {email, password} = this.state;
+    //
+    //     if (!email || !password) {
+    //         this.setState({errorMessage: "Please fill in all fields"});
+    //         return;
+    //     }
+    //
+    //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    //     if (!emailRegex.test(email)) {
+    //         this.setState({errorMessage: "Please enter a valid email address"});
+    //         return;
+    //     }
+    //
+    //     try {
+    //         const response = await axios.post(`${SERVER_HOST}/login`, email, password);
+    //
+    //         sessionStorage.setItem("authToken", response.data.token);
+    //         sessionStorage.setItem("user", JSON.stringify(response.data.user));
+    //
+    //         window.location.href = "/"
+    //     } catch (err) {
+    //         this.setState({errorMessage: "Invalid email address or password"});
+    //     }
+    //
+    //     console.log("Form submitted", {email, password});
+    //
+    //     this.setState({email: "", password: ""});
+    // }
 
 
     render() {

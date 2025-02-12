@@ -15,6 +15,7 @@ export default class Header extends Component {
                 <nav className="nav-links">
                     <Link to="/products">Products</Link>
                     <Link to="/login">login</Link>
+                    <h1>Title</h1>
 
                     <SearchBar />
 
