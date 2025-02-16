@@ -41,6 +41,7 @@ export default class Products extends Component {
                         <div>
                         <p>{product["name"]}</p>
                         <p>{product["category"]}</p>
+                        <img src={product.imgURL} alt={product.name} width="200" />
                         <p>{product["price"]}</p>
                         <p>{product["brand"]}</p>
                         <p>{product["stock"]}</p>
