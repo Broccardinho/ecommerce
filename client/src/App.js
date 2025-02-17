@@ -6,12 +6,17 @@ import Register from "./components/Register"
 import Login from "./components/Login"
 import Products from "./components/Products";
 import Header from "./components/Header"
+import LoggedInRoute from "./components/LoggedInRoute";
+import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
 
-
-
+if (typeof localStorage.accessLevel === "undefined") {
+    localStorage.name = "GUEST"
+    localStorage.accessLevel = ACCESS_LEVEL_GUEST
+    localStorage.token = null
+}
     
 export default class App extends Component 
 {
