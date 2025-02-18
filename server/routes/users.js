@@ -67,7 +67,7 @@ router.post(`/users/register`, async (req, res) => {
 //     })
 // })
 
-router.post(`/users/login`, async (req, res) => {
+router.post(`/users/login`,  (req, res) => {
     const {email, password} = req.body
 
 
@@ -76,12 +76,12 @@ router.post(`/users/login`, async (req, res) => {
     }
 
     try {
-        const user = await User.findOne({email})
+        const user =  User.findOne({email})
         if (!user) {
             return res.status(401).json({message: "User does not exist"})
         }
 
-        const isMatch = await bcrypt.compare(password, user.password)
+        const isMatch =  bcrypt.compare(password, user.password)
         if (!isMatch) {
             return res.status(401).json({message: "Invalid credentials"})
         }

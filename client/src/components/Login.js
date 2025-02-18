@@ -29,7 +29,7 @@ export default class Login extends Component {
             password: this.state.password,
             // redirect: "/"
         }
-
+        console.log(credentials)
         // axios.post('http://localhost:4000/users/login', credentials)
         //     .then(response => {
         //         console.log(response.data);
@@ -41,7 +41,7 @@ export default class Login extends Component {
         //     .catch(error => {
         //         console.error(error);
         //     });
-        axios.post('http://localhost:4000/users/login', credentials)
+        axios.post(`${SERVER_HOST}/users/login`, credentials)
             .then(res => {
                 localStorage.setItem("token", res.data.token)
                 this.setState({ isLoggedIn: true })
