@@ -12,8 +12,8 @@ export default class Login extends Component {
             isLoggedIn: false,
             errorMessage: "",
         }
-        this.handleSubmit = this.handleSubmit.bind(this)
-        this.handleChange = this.handleChange.bind(this)
+        // this.handleSubmit = this.handleSubmit.bind(this)
+        // this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange = (e) => {
@@ -27,23 +27,34 @@ export default class Login extends Component {
         const credentials = {
             email: this.state.email,
             password: this.state.password,
-            redirect: "/"
+            // redirect: "/"
         }
 
+        // axios.post('http://localhost:4000/users/login', credentials)
+        //     .then(response => {
+        //         console.log(response.data);
+        //         if (response.data) {
+        //             this.setState({isLoggedIn: true})
+        //         }
+        //
+        //     })
+        //     .catch(error => {
+        //         console.error(error);
+        //     });
         axios.post('http://localhost:4000/users/login', credentials)
-            .then(response => {
-                console.log(response.data);
-                if (response.data) {
-                    this.setState({isLoggedIn: true})
-                }
-
+            .then(res => {
+                localStorage.setItem("token", res.data.token)
+                this.setState({ isLoggedIn: true })
             })
-            .catch(error => {
-                console.error(error);
-            });
+            .catch(error =>{
+                this.setState({errorMessage: error.response?.data?.message || 'Login failed'})
+            })
     }
 
     render() {
+        if(this.state.isLoggedIn){
+            return <Redirect to='/' />
+        }
         return (
             <div className="login-container">
                 <h2>Login</h2>

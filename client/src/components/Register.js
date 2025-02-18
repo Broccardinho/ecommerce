@@ -1,9 +1,9 @@
 import React, {Component} from "react"
-import {Redirect, Link} from "react-router-dom"
+import {Redirect, Link, withRouter} from "react-router-dom"
 import axios from "axios"
 import {SERVER_HOST} from "../config/global_constants"
 
-export default class Register extends Component {
+class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -13,14 +13,14 @@ export default class Register extends Component {
             password:"",
             confirmPassword:"",
             errors:{},
-            isRegistered:false
+            isRegistered:false,
         }
     }
 
     handleChange = (e) =>
     {
         this.setState({[e.target.name]: e.target.value,
-        errors:{...this.errors, [e.target.name]: ""}})
+        errors:{...this.state.errors, [e.target.name]: ""}})
     }
 
     validate = () =>{
@@ -56,12 +56,19 @@ export default class Register extends Component {
         if(password !== confirmPassword){
             errors.confirmPassword = "Passwords do not match"
         }
+        return errors
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
 
-        const fields={
+        const errors = this.validate()
+        if(Object.keys(errors).length > 0){
+            this.setState({errors})
+            return
+        }
+
+        const userData={
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
@@ -69,19 +76,25 @@ export default class Register extends Component {
             confirmPassword: this.state.confirmPassword,
         }
 
-        axios.post(`${SERVER_HOST}/users/register`, fields)
+
+        axios.post('http://localhost:4000/users/register', userData)
         .then(response => {
             if (response.status === 200){
-                this.props.history.push("/login")
+                this.setState({isRegistered:true})
             }
+        })
+        .catch(error => {
+            this.setState({errorMessage: error.response?.data?.message || 'Registration failed' })
         })
     }
 
     render()
     {
+        if(this.state.isRegistered){
+            return(<Redirect to='/login' />)
+        }
         return (
             <form className="form-container" noValidate = {true} id = "loginOrRegistrationForm">
-                {this.state.isRegistered ? <Redirect to="/productsPage"/> : null}
                 <h2>New User Registration</h2>
                 <input
                     name = "firstName"
@@ -131,8 +144,9 @@ export default class Register extends Component {
                 /><br/><br/>
 
                 <button value="Register New User" className="green-button" onClick={this.handleSubmit}>Register</button>
-                <Link className="red-button" to={"/productsPage"}>Cancel</Link>
+                <Link className="red-button" to={"/login"}>Cancel</Link>
             </form>
         )
     }
 }
+export default withRouter(Register)

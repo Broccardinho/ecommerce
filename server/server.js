@@ -1,6 +1,5 @@
 // Server-side global variables
 require(`dotenv`).config({path:`./config/.env`})
-
 require('./config/db');
 
 // Express
@@ -16,6 +15,7 @@ const corsOptions = {
     origin: 'http://localhost:3000', // Replace with your frontend URL
     methods: 'GET,POST,PUT,DELETE', // You can adjust the allowed methods
     allowedHeaders: 'Content-Type, Authorization', // Include any custom headers you're using
+    credentials: true,
 };
 
 app.use(cors(corsOptions));
