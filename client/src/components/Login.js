@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 import axios from "axios"
-import { SERVER_HOST } from "../config/global_constants";
+import { ACCESS_LEVEL_GUEST , SERVER_HOST } from "../config/global_constants";
 import {Redirect} from "react-router-dom";
 
 export default class Login extends Component {
@@ -27,23 +27,13 @@ export default class Login extends Component {
         const credentials = {
             email: this.state.email,
             password: this.state.password,
-            // redirect: "/"
         }
         console.log(credentials)
-        // axios.post('http://localhost:4000/users/login', credentials)
-        //     .then(response => {
-        //         console.log(response.data);
-        //         if (response.data) {
-        //             this.setState({isLoggedIn: true})
-        //         }
-        //
-        //     })
-        //     .catch(error => {
-        //         console.error(error);
-        //     });
+
         axios.post(`${SERVER_HOST}/users/login`, credentials)
             .then(res => {
                 localStorage.setItem("token", res.data.token)
+                localStorage.setItem("accessLevel", res.data.accessLevel || ACCESS_LEVEL_GUEST)
                 this.setState({ isLoggedIn: true })
             })
             .catch(error =>{

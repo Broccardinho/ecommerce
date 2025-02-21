@@ -1,7 +1,7 @@
 import React, { Component} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
-import {SERVER_HOST} from "../config/global_constants";
+import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/global_constants";
 
 export default class Products extends Component {
 
@@ -37,10 +37,11 @@ export default class Products extends Component {
         {
             return (
                 <div>
-                    <div class="cards-container">
+                    {sessionStorage.accesslevel > ACCESS_LEVEL_GUEST ?
+                    <div className="cards-container">
                     {this.state.products.map(product =>
 
-                        <div class="card" key={product.id}>
+                        <div className="card" key={product.id}>
                         <p>{product["name"]}</p>
                         <p>{product["category"]}</p>
                         <img src={product.imgURL} alt={product.name} width="200" />
@@ -49,7 +50,14 @@ export default class Products extends Component {
                         <p>{product["stock"]}</p>
                         {/*<p>{product["description"]}</p>*/}
                         </div>
-                    )}</div>
+                    )}</div>:null
+                    }
+                    {sessionStorage.accesslevel < ACCESS_LEVEL_ADMIN ?
+                        <div className="AddProduct">
+                            <LINK className="btn btn-primary" to={"/AddProduct"}>ADD PRODUCT</LINK>
+                        </div>
+                        : null
+                    }
 
                     <h1>----------</h1>
                     <Link to="/">Go Home</Link>
