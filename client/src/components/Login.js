@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import axios from "axios"
-import { SERVER_HOST } from "../config/global_constants";
+import { ACCESS_LEVEL_GUEST , SERVER_HOST } from "../config/global_constants";
+import {Redirect} from "react-router-dom";
 
 export default class Login extends Component {
     constructor(props){
@@ -8,52 +9,50 @@ export default class Login extends Component {
         this.state = {
             email: "",
             password: "",
+            isLoggedIn: false,
             errorMessage: "",
         }
+        // this.handleSubmit = this.handleSubmit.bind(this)
+        // this.handleChange = this.handleChange.bind(this)
     }
 
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value});
     }
-    handleSubmit = async (e) => {
-        e.preventDefault();
 
-        const {email, password} = this.state;
+    handleSubmit = (e) =>
+    {
+        e.preventDefault()
 
-        if (!email || !password) {
-            this.setState({errorMessage: "Please fill in all fields"});
-            return;
+        const credentials = {
+            email: this.state.email,
+            password: this.state.password,
         }
+        console.log(credentials)
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            this.setState({errorMessage: "Please enter a valid email address"});
-            return;
-        }
-
-        try {
-            const response = await axios.post(`${SERVER_HOST}/login`, email, password);
-
-            sessionStorage.setItem("authToken", response.data.token);
-            sessionStorage.setItem("user", JSON.stringify(response.data.user));
-
-            window.location.href = "/"
-        } catch (err) {
-            this.setState({errorMessage: "Invalid email address or password"});
-        }
-
-        console.log("Form submitted", {email, password});
-
-        this.setState({email: "", password: ""});
+        axios.post(`${SERVER_HOST}/users/login`, credentials)
+            .then(res => {
+                localStorage.setItem("token", res.data.token)
+                localStorage.setItem("accessLevel", res.data.accessLevel || ACCESS_LEVEL_GUEST)
+                this.setState({ isLoggedIn: true })
+            })
+            .catch(error =>{
+                this.setState({errorMessage: error.response?.data?.message || 'Login failed'})
+            })
     }
 
-
     render() {
+        if(this.state.isLoggedIn){
+            return <Redirect to='/' />
+        }
         return (
             <div className="login-container">
                 <h2>Login</h2>
+
+                {this.state.isLoggedIn ? <Redirect to="/"/> : null}
+
                 {this.state.errorMessage && <p className="errorMessage">{this.state.errorMessage}</p>}
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} noValidate>
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
                         <input

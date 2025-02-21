@@ -13,9 +13,10 @@ router.get('/', async (req, res) => {
 });
 
 // Get all products from `/products` route
-router.get('/products', async (req, res) => {
+router.get('/products',  (req, res) => {
+    console.log(res.data)
     try {
-        const data = await Product.find(); // Use async/await
+        const data =  Product.find(); // Use async/await
         res.json(data);
     } catch (err) {
         console.log(err);
