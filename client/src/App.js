@@ -5,6 +5,9 @@ import ProductsPage from "./components/productPage"
 import Register from "./components/Register"
 import Login from "./components/Login"
 import Products from "./components/Products";
+import AddProducts from "./components/AddProducts";
+import EditProducts from "./components/EditProducts";
+import DeleteProducts from "./components/DeleteProducts";
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
