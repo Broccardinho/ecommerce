@@ -1,11 +1,11 @@
 import React, {Component} from "react"
 import axios from "axios"
-import { ACCESS_LEVEL_GUEST , SERVER_HOST } from "../config/global_constants";
-import {Redirect} from "react-router-dom";
+import { ACCESS_LEVEL_GUEST , SERVER_HOST } from "../config/global_constants"
+import {Redirect} from "react-router-dom"
 
 export default class Login extends Component {
     constructor(props){
-        super(props);
+        super(props)
         this.state = {
             email: "",
             password: "",
@@ -17,7 +17,7 @@ export default class Login extends Component {
     }
 
     handleChange = (e) => {
-        this.setState({[e.target.name]: e.target.value});
+        this.setState({[e.target.name]: e.target.value})
     }
 
     handleSubmit = (e) =>
@@ -27,13 +27,18 @@ export default class Login extends Component {
         const credentials = {
             email: this.state.email,
             password: this.state.password,
+            redirect: sessionStorage.redirect || '/',
         }
         console.log(credentials)
 
         axios.post(`${SERVER_HOST}/users/login`, credentials)
             .then(res => {
-                localStorage.setItem("token", res.data.token)
-                localStorage.setItem("accessLevel", res.data.accessLevel || ACCESS_LEVEL_GUEST)
+                sessionStorage.setItem("token", res.data.token)
+                sessionStorage.setItem("accessLevel", res.data.accessLevel || ACCESS_LEVEL_GUEST)
+
+                sessionStorage.firstName = res.data.firstName
+                sessionStorage.lastName = res.data.lastName
+                sessionStorage.email = res.data.email
                 this.setState({ isLoggedIn: true })
             })
             .catch(error =>{

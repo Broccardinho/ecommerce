@@ -143,7 +143,7 @@ class Register extends Component {
                     onChange = {this.handleChange}
                 /><br/><br/>
 
-                <button type="submit" className="green-button" onClick={this.handleSubmit}>Register</button>
+                <button type="submit"  className="red-button" onClick={this.handleSubmit}>Register</button>
                 <Link className="green-button" to={"/login"}>Cancel</Link>
             </form>
         )

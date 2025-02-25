@@ -6,17 +6,17 @@ require('./config/db');
 const express = require(`express`)
 const cors = require(`cors`)
 const app = express()
+const createError = require(`http-errors`)
 
 app.use(express.json())
 
-app.use(cors())
 app.use(require(`body-parser`).json())
-app.use(require(`cors`)({credentials: true, origin: process.env.LOCAL_HOST}))
+// app.use(require(`cors`)({credentials: true, origin: process.env.LOCAL_HOST}))
 
 const corsOptions = {
-    origin: 'http://localhost:3000', // Replace with your frontend URL
-    methods: 'GET,POST,PUT,DELETE', // You can adjust the allowed methods
-    allowedHeaders: 'Content-Type, Authorization', // Include any custom headers you're using
+    origin: 'http://localhost:3000',
+    methods: 'GET,POST,PUT,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
     credentials: true,
 };
 
@@ -24,10 +24,9 @@ app.use(cors(corsOptions));
 
 
 // Routers
-// const productRoutes = require('./routes/products')
-// app.use('/api/products', productRoutes)
-app.use(require(`./routes/users`))
-
+const productRoutes = require('./routes/products')
+app.use('/users', require('./routes/users'))
+app.use(productRoutes)
 
 // Port
 app.listen(process.env.SERVER_PORT, () => 
