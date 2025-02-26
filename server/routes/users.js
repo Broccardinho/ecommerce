@@ -1,49 +1,44 @@
 const router = require(`express`).Router()
+const usersModel = require(`../models/Users`)
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
-const usersModel = require(`../models/users`)
-
-
-// IMPORTANT
-// Obviously, in a production release, you should never have the code below, as it allows a user to delete a database collection
-// The code below is for development testing purposes only
-router.post(`/users/reset_user_collection`, (req, res) =>
-{
-    usersModel.deleteMany({}, (error, data) =>
-    {
-        if (data)
-        {
-            res.json(data)
-        } else
-        {
-            res.json({errorMessage: `Failed to delete "user" collection for testing purposes`})
-        }
-    })
-})
-
-
-router.post(`/users/register/:name/:email/:password`, (req, res) =>
-{
-    // If a user with this email does not already exist, then create new user
-    usersModel.findOne({email: req.params.email}, (uniqueError, uniqueData) =>
-    {
-        if (uniqueData)
-        {
-            res.json({errorMessage: `User already exists`})
-        } else
-        {
-            usersModel.create({name: req.params.name, email: req.params.email, password: req.params.password}, (error, data) =>
-            {
-                if (data)
-                {
-                    res.json({name: data.name})
-                } else
-                {
-                    res.json({errorMessage: `User was not registered`})
-                }
+router.post(`/users/register`, (req, res) => {
+    usersModel.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.body.password,
+    }, (err, user) => {
+        if (err) {
+            return res.status(500).send({
+                message: "Something went wrong",
             })
         }
     })
 })
 
+router.post(`/users/login`, (req, res) => {
+    usersModel.findOne({email: req.body.email}, (err, data) => {
+        console.log({
+            "USER DATA" : data
+        })
 
-module.exports = router
+        if (data) {
+            res.status(200).json({
+                name: data.name,
+                email: data.email,
+                redirect: "/"
+            })
+        } else {
+            res.status(401).json({errorMessage: `User does not exist`})
+        }
+    })
+})
+
+router.post(`/users/logout`, (req, res) => {
+    res.json({})
+})
+
+
+module.exports = router;

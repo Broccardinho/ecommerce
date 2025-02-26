@@ -37,10 +37,10 @@ export default class Products extends Component {
         {
             return (
                 <div>
-                    <div class="cards-container">
+                    <div className="cards-container" >
                     {this.state.products.map(product =>
 
-                        <div class="card" key={product.id}>
+                        <div className="card" key={product.id}>
                         <p>{product["name"]}</p>
                         <p>{product["category"]}</p>
                         <img src={product.imgURL} alt={product.name} width="200" />
