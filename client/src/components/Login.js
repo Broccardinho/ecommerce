@@ -16,6 +16,23 @@ export default class Login extends Component {
         // this.handleChange = this.handleChange.bind(this)
     }
 
+
+    validate = () => {
+        const errors ={}
+        const {email, password} = this.state
+        let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+        if(!email.trim()){
+            errors.email = "Email is required"
+        } else if (!emailRegex.test(email)){
+            errors.email = "Invalid email format"
+        }
+        if(!password.trim()){
+            errors.password = "Password is required"
+        }
+        return errors
+    }
+
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value})
     }
@@ -23,6 +40,11 @@ export default class Login extends Component {
     handleSubmit = (e) =>
     {
         e.preventDefault()
+        const errors = this.validate()
+        if(Object.keys(errors).length > 0){
+            this.setState({errors})
+            return
+        }
 
         const credentials = {
             email: this.state.email,
@@ -68,6 +90,7 @@ export default class Login extends Component {
                             onChange={this.handleChange}
                             required
                             />
+                        {this.state.errors?.email && <div className="error">{this.state.errors.email}</div>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
@@ -79,6 +102,7 @@ export default class Login extends Component {
                         onChange={this.handleChange}
                         required
                         />
+                        {this.state.errors?.password && <div className="error">{this.state.errors.password}</div>}
                     </div>
                     <button type="submit" className="btn btn-primary">Login</button>
                 </form>

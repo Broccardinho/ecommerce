@@ -26,30 +26,28 @@ class Register extends Component {
     validate = () =>{
         const errors = {}
         const {firstName, lastName, email, password, confirmPassword} = this.state
-        let vaidateEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+        let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
         console.log({
             "First name":firstName,
             "Last name": lastName,
         })
-        if(!firstName.trim()){
-            errors.firstName = "First name is required"
-        }
-        if(!lastName.trim()){
-            errors.lastName = "Last name is required"
-        }
+        if(!firstName.trim()){errors.firstName = "First name is required"}
+
+        if(!lastName.trim()){errors.lastName = "Last name is required"}
+
         if(!email.trim()){
             errors.email = "Email is required"
+        }else if(!emailRegex.test(email)){
+            errors.email = "Invalid email format"
         }
-        if(!email.trim() && !email.match(vaidateEmail)){
-            errors.email = "Please enter a valid email"
-        }
+
         if(!password.trim()){
             errors.password = "Password is required"
+        }else if(password.length < 8){
+            errors.password = "Password must be at least 8 characters"
         }
-        if(password.length < 7){
-            errors.password = "Password must be at least 7 characters"
-        }
+
         if(!confirmPassword.trim()){
             errors.confirmPassword = "Confirm password is required"
         }
@@ -104,7 +102,9 @@ class Register extends Component {
                     value = {this.state.firstName}
                     onChange = {this.handleChange}
                     ref = {(input) => { this.inputToFocus = input }}
-                /><br/>
+                />
+                {this.state.errors.firstName && <div className="error"> {this.state.errors.firstName} </div>}
+                    <br/>
                 <input
                     name = "lastName"
                     type = "text"
@@ -113,7 +113,9 @@ class Register extends Component {
                     value = {this.state.lastName}
                     onChange = {this.handleChange}
                     ref = {(input) => { this.inputToFocus = input }}
-                /><br/>
+                />
+                {this.state.errors.lastName && <div className="error"> {this.state.errors.lastName} </div>}
+                <br/>
 
                 <input
                     name = "email"
@@ -122,7 +124,9 @@ class Register extends Component {
                     autoComplete="email"
                     value = {this.state.email}
                     onChange = {this.handleChange}
-                /><br/>
+                />
+                {this.state.errors.email && <div className="error"> {this.state.errors.email} </div>}
+                <br/>
 
                 <input
                     name = "password"
@@ -132,7 +136,9 @@ class Register extends Component {
                     title = "*****"
                     value = {this.state.password}
                     onChange = {this.handleChange}
-                /><br/>
+                />
+                {this.state.errors.password && <div className="error"> {this.state.errors.password} </div>}
+                <br/>
 
                 <input
                     name = "confirmPassword"
@@ -141,7 +147,9 @@ class Register extends Component {
                     autoComplete="confirmPassword"
                     value = {this.state.confirmPassword}
                     onChange = {this.handleChange}
-                /><br/><br/>
+                />
+                {this.state.errors.confirmPassword && <div className="error"> {this.state.errors.confirmPassword} </div>}
+                <br/><br/>
 
                 <button type="submit"  className="red-button" onClick={this.handleSubmit}>Register</button>
                 <Link className="green-button" to={"/login"}>Cancel</Link>
