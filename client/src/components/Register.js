@@ -75,7 +75,7 @@ class Register extends Component {
             confirmPassword: this.state.confirmPassword,
         }
 
-        axios.post(`${SERVER_HOST}/users/register`, fields)
+        axios.post(`${SERVER_HOST}/users/register`, userData)
             .then(response => {
                 if (response.status === 200){
                     this.setState({isRegistered:true})
