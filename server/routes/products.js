@@ -2,25 +2,25 @@ const router = require('express').Router();
 const Product = require("../models/Products");
 
 // Get all products
-router.get('/', async (req, res) => {
-    try {
-        const data = await Product.find(); // Use async/await instead of callback
-        res.json(data);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: err.message });
-    }
-});
+// router.get('/', async (req, res) => {
+//     try {
+//         const data = await Product.find(); // Use async/await instead of callback
+//         res.json(data);
+//     } catch (err) {
+//         console.error("Error fetching products:", err); // Improved error logging
+//         res.status(500).json({ error: "Internal Server Error" });
+//     }
+// });
 
 // Get all products from `/products` route
-router.get('/products',  (req, res) => {
-    console.log(res.data)
+router.get('/products', async (req, res) => {
+    console.log("line 17")
     try {
-        const data =  Product.find(); // Use async/await
+        const data = await Product.find(); // Use async/await
         res.json(data);
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: err.message });
+        console.error("Error fetching products from /products route:", err); // Improved error logging
+        res.status(500).json({ error: "Internal Server Error" });
     }
 });
 

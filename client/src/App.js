@@ -12,9 +12,11 @@ import EditProduct from "./components/EditProduct";
 import DeleteProduct from "./components/DeleteProduct";
 import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
 import AdminPage from "./components/AdminPage";
+import Logout from "./components/Logout"
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
+import LoggedInAdminRoute from "./components/LoggedInAdminRoute";
 
 if (typeof localStorage.accessLevel === "undefined") {
     localStorage.name = "GUEST"
@@ -37,7 +39,8 @@ export default class App extends Component
                         <Route path ="/productsPage" component={ProductsPage} />
                         <Route path="/Register" component={Register} />
                         <Route path="/Login" component={Login} />
-                        <Route path="/AdminPage" component={AdminPage} />
+                        <Route path="/Logout" component={Logout} />
+                        <LoggedInAdminRoute exact path="/AdminPage" component={AdminPage} />
                         <LoggedInRoute exact path="/AddProduct" component={AddProduct} />
                         <LoggedInRoute exact path="/EditProduct" component={EditProduct} />
                         <LoggedInRoute exact path="/DeleteProduct" component={DeleteProduct} />

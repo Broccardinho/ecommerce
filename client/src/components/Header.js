@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Logo from "./Logo";
 import SearchBar from "../components/SearchBar";
 import CartIcon from "./CartIcon";
+import Profile from "./Profile";
 
 export default class Header extends Component {
     render() {
@@ -16,6 +17,7 @@ export default class Header extends Component {
                     <Link to="/products">Products</Link>
                     <Link to="/login">login</Link>
                     <Link to="/register">register</Link>
+                    <Link to="/logout">logout</Link>
                     <h1>Title</h1>
 
                     <SearchBar />

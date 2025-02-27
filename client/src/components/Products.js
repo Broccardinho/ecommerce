@@ -1,8 +1,7 @@
 import React, { Component} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
-import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/global_constants";
-
+import { SERVER_HOST, ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN} from "../config/global_constants";
 export default class Products extends Component {
 
     constructor(props) {
@@ -19,7 +18,6 @@ export default class Products extends Component {
     {
         axios.get(`${SERVER_HOST}/Products`).then(res => {
             if (res.data) {
-
                 if (res.data.errorMessage) {
                     console.log(res.data.errorMessage)
                 } else {
@@ -32,29 +30,31 @@ export default class Products extends Component {
                 }
             }
         })
+            .catch(error =>{
+                console.log("Error retrieving products")
+                console.log(error)
+            })
     }
         render()
         {
             return (
                 <div>
-                    {sessionStorage.accesslevel > ACCESS_LEVEL_GUEST ?
+                    {sessionStorage.accesslevel !== ACCESS_LEVEL_GUEST ?
                     <div className="cards-container">
-                    {this.state.products.map(product =>
-
-                        <div className="card" key={product.id}>
-                        <p>{product["name"]}</p>
-                        <p>{product["category"]}</p>
-                        <img src={product.imgURL} alt={product.name} width="200" />
-                        <p>{product["price"]}</p>
-                        <p>{product["brand"]}</p>
-                        <p>{product["stock"]}</p>
-                        {/*<p>{product["description"]}</p>*/}
+                    {this.state.products.map((product, index) =>
+                        <div className="card" key={index}>
+                            <p>{product["name"]}</p>
+                            <p>{product["category"]}</p>
+                            <img src={product.imgURL} alt={product.name} width="200"/>
+                            <p>{product["price"]}</p>
+                            <p>{product["brand"]}</p>
+                            <p>{product["stock"]}</p>
                         </div>
                     )}</div>:null
                     }
                     {sessionStorage.accesslevel < ACCESS_LEVEL_ADMIN ?
                         <div className="AddProduct">
-                            <LINK className="btn btn-primary" to={"/AddProduct"}>ADD PRODUCT</LINK>
+                            <Link className="btn btn-primary" to={"/AddProduct"}>ADD PRODUCT</Link>
                         </div>
                         : null
                     }
