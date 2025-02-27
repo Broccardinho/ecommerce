@@ -13,14 +13,15 @@ class Register extends Component {
             password:"",
             confirmPassword:"",
             errors:{},
-            isRegistered:false,
+            isRegistered:false
         }
     }
+
 
     handleChange = (e) =>
     {
         this.setState({[e.target.name]: e.target.value,
-        errors:{...this.state.errors, [e.target.name]: ""}})
+            errors:{...this.errors, [e.target.name]: ""}})
     }
 
     validate = () =>{
@@ -74,17 +75,17 @@ class Register extends Component {
             confirmPassword: this.state.confirmPassword,
         }
 
-
-        axios.post('http://localhost:4000/users/register', userData)
-        .then(response => {
-            if (response.status === 200){
-                this.setState({isRegistered:true})
-            }
-        })
-        .catch(error => {
-            this.setState({errorMessage: error.response?.data?.message || 'Registration failed' })
-        })
+        axios.post(`${SERVER_HOST}/users/register`, fields)
+            .then(response => {
+                if (response.status === 200){
+                    this.setState({isRegistered:true})
+                }
+            })
+            .catch(error => {
+                this.setState({errorMessage: error.response?.data?.message || 'Registration failed' })
+            })
     }
+
 
     render()
     {

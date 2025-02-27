@@ -1,5 +1,5 @@
 import React, { Component} from "react";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 import { SERVER_HOST, ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN} from "../config/global_constants";
 export default class Products extends Component {
@@ -16,8 +16,7 @@ export default class Products extends Component {
 
     componentDidMount()
     {
-        axios.get(`${SERVER_HOST}/products`)
-            .then(res => {
+        axios.get(`${SERVER_HOST}/Products`).then(res => {
             if (res.data) {
                 if (res.data.errorMessage) {
                     console.log(res.data.errorMessage)
