@@ -12,7 +12,8 @@ export default class Products extends Component {
             searchInput: '',
             sortOrder: 'none',
             sortField: 'none',
-            brandFilter: ''
+            brandFilter: '',
+            categoryFilter: ''
         };
     }
 
@@ -50,14 +51,19 @@ export default class Products extends Component {
         this.setState({ brandFilter: e.target.value });
     };
 
+    handleCategoryChange = e => {
+        this.setState({ categoryFilter: e.target.value });
+    };
+
     getFilteredProducts = () => {
-        const { originalProducts, searchInput, sortOrder, sortField, brandFilter } = this.state;
+        const { originalProducts, searchInput, sortOrder, sortField, brandFilter, categoryFilter } = this.state;
 
         let filteredProducts = originalProducts.filter(product =>
             (product.name.toLowerCase().includes(searchInput) ||
                 product.category.toLowerCase().includes(searchInput) ||
                 product.brand.toLowerCase().includes(searchInput)) &&
-            (brandFilter === '' || product.brand === brandFilter) // Ensure filtering by exact brand match
+            (brandFilter === '' || product.brand === brandFilter) &&
+            (categoryFilter === '' || product.category === categoryFilter)
         );
 
         if (sortField !== 'none' && sortOrder !== 'none') {
@@ -75,13 +81,14 @@ export default class Products extends Component {
 
     render() {
         const filteredProducts = this.getFilteredProducts();
-        const uniqueBrands = [...new Set(this.state.originalProducts.map(product => product.brand))]; // Get unique brands
+        const uniqueBrands = [...new Set(this.state.originalProducts.map(product => product.brand))];
+        const uniqueCategories = [...new Set(this.state.originalProducts.map(product => product.category))]; // ✅ Extract unique categories
 
         return (
             <div>
                 <input type="text" placeholder="Search products..." onChange={this.handleSearchChange} />
 
-                {/* Brand Filter */}
+                {/* Brand Filter by Cal */}
                 <select onChange={this.handleBrandChange}>
                     <option value="">All Brands</option>
                     {uniqueBrands.map(brand => (
@@ -89,7 +96,15 @@ export default class Products extends Component {
                     ))}
                 </select>
 
-                {/* Sorting Options */}
+                {/*Filter by Cal*/}
+                <select onChange={this.handleCategoryChange}>
+                    <option value="">All Categories</option>
+                    {uniqueCategories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                    ))}
+                </select>
+
+                {/*Sorting by Cal*/}
                 <select onChange={this.handleSortOrderChange}>
                     <option value="none-none">Default Sorting</option>
                     <option value="asc-price">Price: Low to High</option>
@@ -98,7 +113,7 @@ export default class Products extends Component {
                     <option value="desc-stock">Stock: High to Low</option>
                 </select>
 
-                {/* Product Cards */}
+                {/* Product Cards y Cal*/}
                 {sessionStorage.accesslevel !== ACCESS_LEVEL_GUEST ? (
                     <div className="cards-container">
                         {filteredProducts.map((product, index) => (
