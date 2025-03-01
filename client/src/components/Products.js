@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { SERVER_HOST, ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN } from "../config/global_constants";
+import { SERVER_HOST, ACCESS_LEVEL_GUEST } from "../config/global_constants";
 
 export default class Products extends Component {
     constructor(props) {
         super(props);
         this.state = {
             products: [],
-            originalProducts: [], // Stores the unfiltered products
+            originalProducts: [],
             searchInput: '',
             sortOrder: 'none',
             sortField: 'none',
-            categoryFilter: ''
+            brandFilter: ''
         };
     }
 
@@ -46,26 +46,26 @@ export default class Products extends Component {
         this.setState({ sortOrder, sortField });
     };
 
-    handleCategoryChange = e => {
-        this.setState({ categoryFilter: e.target.value });
+    handleBrandChange = e => {
+        this.setState({ brandFilter: e.target.value });
     };
 
     getFilteredProducts = () => {
-        const { originalProducts, searchInput, sortOrder, sortField, categoryFilter } = this.state;
+        const { originalProducts, searchInput, sortOrder, sortField, brandFilter } = this.state;
 
         let filteredProducts = originalProducts.filter(product =>
-            product.name.toLowerCase().includes(searchInput) ||
-            product.category.toLowerCase().includes(searchInput) ||
-            product.brand.toLowerCase().includes(searchInput)&&
-            (categoryFilter === '' || product.category.includes(categoryFilter))
+            (product.name.toLowerCase().includes(searchInput) ||
+                product.category.toLowerCase().includes(searchInput) ||
+                product.brand.toLowerCase().includes(searchInput)) &&
+            (brandFilter === '' || product.brand === brandFilter) // Ensure filtering by exact brand match
         );
 
         if (sortField !== 'none' && sortOrder !== 'none') {
             filteredProducts.sort((a, b) => {
                 if (sortOrder === 'asc') {
-                    return a[sortField] - b[sortField]; // Ascending
+                    return a[sortField] - b[sortField];
                 } else {
-                    return b[sortField] - a[sortField]; // Descending
+                    return b[sortField] - a[sortField];
                 }
             });
         }
@@ -75,17 +75,21 @@ export default class Products extends Component {
 
     render() {
         const filteredProducts = this.getFilteredProducts();
-        const uniqueCategories = [...new Set(this.state.products.flatMap(product => product.categories))];
+        const uniqueBrands = [...new Set(this.state.originalProducts.map(product => product.brand))]; // Get unique brands
 
         return (
             <div>
                 <input type="text" placeholder="Search products..." onChange={this.handleSearchChange} />
 
-                <select onChange={this.handleCategoryChange}>
-                    <option value="">All Instruments</option>
-                    {uniqueCategories.map(category => (<option key={category} value={category}>{category}</option>))}
+                {/* Brand Filter */}
+                <select onChange={this.handleBrandChange}>
+                    <option value="">All Brands</option>
+                    {uniqueBrands.map(brand => (
+                        <option key={brand} value={brand}>{brand}</option>
+                    ))}
                 </select>
 
+                {/* Sorting Options */}
                 <select onChange={this.handleSortOrderChange}>
                     <option value="none-none">Default Sorting</option>
                     <option value="asc-price">Price: Low to High</option>
@@ -94,6 +98,7 @@ export default class Products extends Component {
                     <option value="desc-stock">Stock: High to Low</option>
                 </select>
 
+                {/* Product Cards */}
                 {sessionStorage.accesslevel !== ACCESS_LEVEL_GUEST ? (
                     <div className="cards-container">
                         {filteredProducts.map((product, index) => (
