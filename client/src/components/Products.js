@@ -11,7 +11,8 @@ export default class Products extends Component {
             originalProducts: [], // Stores the unfiltered products
             searchInput: '',
             sortOrder: 'none',
-            sortField: 'none' // NEW: Determines whether sorting is by "price" or "stock"
+            sortField: 'none',
+            categoryFilter: ''
         };
     }
 
@@ -45,13 +46,18 @@ export default class Products extends Component {
         this.setState({ sortOrder, sortField });
     };
 
+    handleCategoryChange = e => {
+        this.setState({ categoryFilter: e.target.value });
+    };
+
     getFilteredProducts = () => {
-        const { originalProducts, searchInput, sortOrder, sortField } = this.state;
+        const { originalProducts, searchInput, sortOrder, sortField, categoryFilter } = this.state;
 
         let filteredProducts = originalProducts.filter(product =>
             product.name.toLowerCase().includes(searchInput) ||
             product.category.toLowerCase().includes(searchInput) ||
-            product.brand.toLowerCase().includes(searchInput)
+            product.brand.toLowerCase().includes(searchInput)&&
+            (categoryFilter === '' || product.category.includes(categoryFilter))
         );
 
         if (sortField !== 'none' && sortOrder !== 'none') {
@@ -69,10 +75,16 @@ export default class Products extends Component {
 
     render() {
         const filteredProducts = this.getFilteredProducts();
+        const uniqueCategories = [...new Set(this.state.products.flatMap(product => product.categories))];
 
         return (
             <div>
                 <input type="text" placeholder="Search products..." onChange={this.handleSearchChange} />
+
+                <select onChange={this.handleCategoryChange}>
+                    <option value="">All Instruments</option>
+                    {uniqueCategories.map(category => (<option key={category} value={category}>{category}</option>))}
+                </select>
 
                 <select onChange={this.handleSortOrderChange}>
                     <option value="none-none">Default Sorting</option>
