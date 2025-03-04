@@ -41,18 +41,3 @@ app.listen(process.env.SERVER_PORT, () =>
 app.use(notFoundHandler)
 
 app.use(errorHandler)
-
-
-// // Error 404
-// app.use((req, res, next) => {next(createError(404))})
-//
-// // Other errors
-// app.use(function (err, req, res, next)
-// {
-//     console.error(err.message)
-//     if (!err.statusCode)
-//     {
-//         err.statusCode = 500
-//     }
-//     res.status(err.statusCode).send(err.message)
-// })

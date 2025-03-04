@@ -1,8 +1,8 @@
 import React, { Component} from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import axios from "axios";
 import { SERVER_HOST, ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN} from "../config/global_constants";
-export default class Products extends Component {
+class Products extends Component {
 
     constructor(props) {
         super(props);
@@ -16,7 +16,7 @@ export default class Products extends Component {
 
     componentDidMount()
     {
-        axios.get(`${SERVER_HOST}/Products`).then(res => {
+        axios.get(`${SERVER_HOST}/products`).then(res => {
             if (res.data) {
                 if (res.data.errorMessage) {
                     console.log(res.data.errorMessage)
@@ -35,6 +35,10 @@ export default class Products extends Component {
                 console.log(error)
             })
     }
+    handleProductClick = (productId) => {
+        console.log("Product clicked: ", productId)
+        this.props.history.push(`/productsPage/${productId}`)
+    }
         render()
         {
             return (
@@ -42,7 +46,7 @@ export default class Products extends Component {
                     {sessionStorage.accesslevel !== ACCESS_LEVEL_GUEST ?
                     <div className="cards-container">
                     {this.state.products.map((product, index) =>
-                        <div className="card" key={index}>
+                        <div className="card" key={index} onClick={() => this.handleProductClick(product._id)}>
                             <p>{product["name"]}</p>
                             <p>{product["category"]}</p>
                             <img src={product.imgURL} alt={product.name} width="200"/>
@@ -65,3 +69,4 @@ export default class Products extends Component {
             )
         }
 }
+export default withRouter(Products);

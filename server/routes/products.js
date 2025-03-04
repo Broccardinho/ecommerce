@@ -24,4 +24,16 @@ router.get('/products', async (req, res) => {
     }
 });
 
+router.get('/products/:productId', async (req, res) => {
+    try{
+        const product = await Product.findById(req.params.productId);
+        if (!product) {
+            return res.status(404).json({ error: "Product not found" });
+        }
+        res.json(product);
+    }catch (err){
+        console.error("Error fetching product by ID:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
 module.exports = router;
