@@ -89,18 +89,18 @@ export default class Login extends Component {
                             value={this.state.email}
                             onChange={this.handleChange}
                             required
-                            />
+                        />
                         {this.state.errors?.email && <div className="error">{this.state.errors.email}</div>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
                         <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        required
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={this.state.password}
+                            onChange={this.handleChange}
+                            required
                         />
                         {this.state.errors?.password && <div className="error">{this.state.errors.password}</div>}
                     </div>

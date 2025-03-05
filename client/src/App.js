@@ -13,7 +13,7 @@ import DeleteProduct from "./components/DeleteProduct";
 import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
 import AdminPage from "./components/AdminPage";
 import Logout from "./components/Logout"
-import Profile from "./components/Profile"
+import Checkout from "./components/Checkout"
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
@@ -24,10 +24,10 @@ if (typeof localStorage.accessLevel === "undefined") {
     localStorage.accessLevel = ACCESS_LEVEL_GUEST
     localStorage.token = null
 }
-    
-export default class App extends Component 
+
+export default class App extends Component
 {
-    render() 
+    render()
     {
         return (
             <BrowserRouter>
@@ -37,15 +37,15 @@ export default class App extends Component
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/Products" component={Products} />
-                        <Route path ="/productsPage" component={ProductsPage} />
+                        <Route path="/productsPage/:productId" component={ProductsPage} />
                         <Route path="/Register" component={Register} />
                         <Route path="/Login" component={Login} />
                         <Route path="/Logout" component={Logout} />
-                        <Route path="/profile" component={Profile}/>
                         <LoggedInAdminRoute exact path="/AdminPage" component={AdminPage} />
                         <LoggedInRoute exact path="/AddProduct" component={AddProduct} />
                         <LoggedInRoute exact path="/EditProduct" component={EditProduct} />
                         <LoggedInRoute exact path="/DeleteProduct" component={DeleteProduct} />
+                        <Route path="/Checkout" component={Checkout} />
                     </Switch>
                 </div>
             </BrowserRouter>
