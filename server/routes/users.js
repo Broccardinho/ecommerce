@@ -99,4 +99,21 @@ router.post(`/login`, async (req, res) => {
         }
     })
 
+router.get(`/users/:userId`, (req, res) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) =>
+    {
+        if (err)
+        {
+            res.json({errorMessage:`User is not logged in`})
+        }
+        else
+        {
+            users.findById(req.params.id, (error, data) =>
+            {
+                res.json(data)
+            })
+        }
+    })
+})
+
 module.exports = router

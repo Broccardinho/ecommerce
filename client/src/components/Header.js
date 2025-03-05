@@ -18,6 +18,7 @@ export default class Header extends Component {
                     <Link to="/login">login</Link>
                     <Link to="/register">register</Link>
                     <Link to="/logout">logout</Link>
+                    <Link to="/profile">profile</Link>
                     <h1>Title</h1>
 
                     <SearchBar />

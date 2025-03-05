@@ -13,6 +13,7 @@ import DeleteProduct from "./components/DeleteProduct";
 import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
 import AdminPage from "./components/AdminPage";
 import Logout from "./components/Logout"
+import Profile from "./components/Profile"
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
@@ -40,6 +41,7 @@ export default class App extends Component
                         <Route path="/Register" component={Register} />
                         <Route path="/Login" component={Login} />
                         <Route path="/Logout" component={Logout} />
+                        <Route path="/profile" component={Profile}/>
                         <LoggedInAdminRoute exact path="/AdminPage" component={AdminPage} />
                         <LoggedInRoute exact path="/AddProduct" component={AddProduct} />
                         <LoggedInRoute exact path="/EditProduct" component={EditProduct} />
