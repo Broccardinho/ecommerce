@@ -70,7 +70,7 @@ class Products extends Component {
             (brandFilter === '' || product.brand === brandFilter) &&
             (categoryFilter === '' || product.category === categoryFilter)
         );
-
+//
         if (sortField !== 'none' && sortOrder !== 'none') {
             filteredProducts.sort((a, b) => {
                 const aValue = parseFloat(a[sortField]);
