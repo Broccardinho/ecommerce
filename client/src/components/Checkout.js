@@ -1,64 +1,44 @@
-import React, { Component } from "react";
-import axios from "axios";
+import React, {Component} from "react"
+import axios from "axios"
+import {Redirect} from "react-router-dom"
+import {SANDBOX_CLIENT_ID, SERVER_HOST} from "../config/global_constants"
+import PayPalMessage from "./PayPalMessage"
+import {PayPalButtons, PayPalScriptProvider} from "@paypal/react-paypal-js"
 
-class Checkout extends Component {
-    constructor(props) {
-        super(props);
 
-        // Initialize state
-        this.state = {
-            items: [], // Stores the fetched items
-            loading: true, // Tracks loading state
-            error: null, // Stores error messages
-        };
+export default class Checkout extends Component
+{
+    createOrder = (data, actions) =>
+    {
+        return actions.order.create({purchase_units:[{amount:{value:this.props.price}}]})
     }
 
-    // Fetch items from the backend when the component mounts
-    componentDidMount() {
-        this.fetchItems();
+
+    onApprove = paymentData =>
+    {
+        console.log("PayPal payment successful")
     }
 
-    // Function to fetch items from the backend
-    fetchItems = async () => {
-        try {
-            const response = await axios.get("/api/checkout-items", {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`, // Include the user's token for authentication
-                },
-            });
-            this.setState({ items: response.data, loading: false }); // Update state with fetched items
-        } catch (error) {
-            console.error("Error fetching checkout items:", error);
-            this.setState({ error: "Failed to fetch checkout items. Please try again later.", loading: false });
-        }
-    };
 
-    render() {
-        const { items, loading, error } = this.state;
+    onError = errorData =>
+    {
+        console.log("PayPal payment error")
+    }
 
+
+    onCancel = cancelData =>
+    {
+        console.log("PayPal payment cancelled")
+    }
+
+
+    render()
+    {
         return (
-            <div className="checkout-container">
-                <h1>Checkout</h1>
-                {loading ? (
-                    <p>Loading...</p>
-                ) : error ? (
-                    <p className="error-message">{error}</p>
-                ) : items.length > 0 ? (
-                    <ul className="checkout-list">
-                        {items.map((item) => (
-                            <li key={item._id} className="checkout-item">
-                                <h3>{item.name}</h3>
-                                <p>Price: ${item.price}</p>
-                                <p>Quantity: {item.quantity}</p>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No items found in your checkout.</p>
-                )}
+            <div>
+                <PayPalScriptProvider options={{currency:"EUR", "client-id":SANDBOX_CLIENT_ID }}>
+                    <PayPalButtons style={{layout: "horizontal"}} createOrder={this.createOrder} onApprove={this.onApprove} onError={this.onError} onCancel={this.onCancel}/>
+                </PayPalScriptProvider>
             </div>
-        );
-    }
+        )}
 }
-
-export default Checkout;

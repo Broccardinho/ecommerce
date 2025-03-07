@@ -1,7 +1,7 @@
-import React, { Component} from "react";
-import {Link, withRouter} from "react-router-dom";
+import React, { Component } from "react";
+import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
-import { SERVER_HOST, ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN} from "../config/global_constants";
+import { SERVER_HOST, ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN } from "../config/global_constants";
 
 class Products extends Component {
     constructor(props) {
@@ -37,28 +37,30 @@ class Products extends Component {
                 console.log(error);
             });
     }
+
     handleProductClick = (productId) => {
-        console.log("Product clicked: ", productId)
-        this.props.history.push(`/productsPage/${productId}`)
-    }
+        console.log("Product clicked: ", productId);
+        this.props.history.push(`/productsPage/${productId}`);
+    };
+
     handleSearchChange = e => {
-        this.setState({ searchInput: e.target.value.toLowerCase() });
+        this.setState({ searchInput: e.target.value.toLowerCase() }, this.applyFilters);
     };
 
     handleSortOrderChange = e => {
         const [sortOrder, sortField] = e.target.value.split('-');
-        this.setState({ sortOrder, sortField });
+        this.setState({ sortOrder, sortField }, this.applyFilters);
     };
 
     handleBrandChange = e => {
-        this.setState({ brandFilter: e.target.value });
+        this.setState({ brandFilter: e.target.value }, this.applyFilters);
     };
 
     handleCategoryChange = e => {
-        this.setState({ categoryFilter: e.target.value });
+        this.setState({ categoryFilter: e.target.value }, this.applyFilters);
     };
 
-    getFilteredProducts = () => {
+    applyFilters = () => {
         const { originalProducts, searchInput, sortOrder, sortField, brandFilter, categoryFilter } = this.state;
 
         let filteredProducts = originalProducts.filter(product =>
@@ -71,64 +73,68 @@ class Products extends Component {
 
         if (sortField !== 'none' && sortOrder !== 'none') {
             filteredProducts.sort((a, b) => {
+                const aValue = parseFloat(a[sortField]);
+                const bValue = parseFloat(b[sortField]);
                 if (sortOrder === 'asc') {
-                    return a[sortField] - b[sortField];
+                    return aValue - bValue;
                 } else {
-                    return b[sortField] - a[sortField];
+                    return bValue - aValue;
                 }
             });
         }
 
-        return filteredProducts;
+        this.setState({ products: filteredProducts });
     };
-    render()
-    {
-        const filteredProducts = this.getFilteredProducts();
+
+    render() {
+        const { products, searchInput, brandFilter, categoryFilter } = this.state;
         const uniqueBrands = [...new Set(this.state.originalProducts.map(product => product.brand))];
         const uniqueCategories = [...new Set(this.state.originalProducts.map(product => product.category))];
 
         return (
             <div>
-            <input type="text" placeholder="Search products..." onChange={this.handleSearchChange} />
+                <input type="text" placeholder="Search products..." onChange={this.handleSearchChange} />
 
-        {/* Brand Filter by Cal */}
-        <select onChange={this.handleBrandChange}>
-            <option value="">All Brands</option>
-            {uniqueBrands.map(brand => (
-                <option key={brand} value={brand}>{brand}</option>
-            ))}
-        </select>
+                {/* Brand Filter by Cal*/}
+                <select value={brandFilter} onChange={this.handleBrandChange}>
+                    <option value="">All Brands</option>
+                    {uniqueBrands.map(brand => (
+                        <option key={brand} value={brand}>{brand}</option>
+                    ))}
+                </select>
 
-        {/*Filter by Cal*/}
-        <select onChange={this.handleCategoryChange}>
-            <option value="">All Categories</option>
-            {uniqueCategories.map(category => (
-                <option key={category} value={category}>{category}</option>
-            ))}
-        </select>
+                {/* Category Filter by Cal*/}
+                <select value={categoryFilter} onChange={this.handleCategoryChange}>
+                    <option value="">All Categories</option>
+                    {uniqueCategories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                    ))}
+                </select>
 
-        {/*Sorting by Cal*/}
-        <select onChange={this.handleSortOrderChange}>
-            <option value="none-none">Default Sorting</option>
-            <option value="asc-price">Price: Low to High</option>
-            <option value="desc-price">Price: High to Low</option>
-            <option value="asc-stock">Stock: Low to High</option>
-            <option value="desc-stock">Stock: High to Low</option>
-        </select>
+                {/* Sorting by Cal*/}
+                <select onChange={this.handleSortOrderChange}>
+                    <option value="none-none">Default Sorting</option>
+                    <option value="asc-price">Price: Low to High</option>
+                    <option value="desc-price">Price: High to Low</option>
+                    <option value="asc-stock">Stock: Low to High</option>
+                    <option value="desc-stock">Stock: High to Low</option>
+                </select>
 
                 {sessionStorage.accesslevel !== ACCESS_LEVEL_GUEST ?
                     <div className="cards-container">
-                        {this.state.products.map((product, index) =>
+                        {products.map((product, index) =>
                             <div className="card" key={index} onClick={() => this.handleProductClick(product._id)}>
-                                <p>{product["name"]}</p>
-                                <p>{product["category"]}</p>
-                                <img src={product.imgURL} alt={product.name} width="200"/>
-                                <p>{product["price"]}</p>
-                                <p>{product["brand"]}</p>
-                                <p>{product["stock"]}</p>
+                                <p>{product.name}</p>
+                                <p>{product.category}</p>
+                                <img src={product.imgURL} alt={product.name} width="200" />
+                                <p>{product.price}</p>
+                                <p>{product.brand}</p>
+                                <p>{product.stock}</p>
                             </div>
-                        )}</div>:null
+                        )}
+                    </div> : null
                 }
+
                 {sessionStorage.accesslevel < ACCESS_LEVEL_ADMIN ?
                     <div className="AddProduct">
                         <Link className="btn btn-primary" to={"/AddProduct"}>ADD PRODUCT</Link>
@@ -139,7 +145,8 @@ class Products extends Component {
                 <h1>----------</h1>
                 <Link to="/">Go Home</Link>
             </div>
-        )
+        );
     }
 }
+
 export default withRouter(Products);
