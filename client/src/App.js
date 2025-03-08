@@ -13,6 +13,11 @@ import DeleteProduct from "./components/DeleteProduct";
 import { ACCESS_LEVEL_GUEST } from "./config/global_constants";
 import AdminPage from "./components/AdminPage";
 import Logout from "./components/Logout"
+import Footer from "./components/Footer";
+import TermsAndConditions from "./components/TermsAndConditions";
+import PrivacyPolicy from "./components/PrivacyPolicy";
+import ContactUs from "./components/ContactUs";
+
 
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
@@ -40,11 +45,16 @@ export default class App extends Component
                         <Route path="/Register" component={Register} />
                         <Route path="/Login" component={Login} />
                         <Route path="/Logout" component={Logout} />
+                        <Route path="/TermsAndConditions" component={TermsAndConditions} />
+                        <Route path="/PrivacyPolicy" component={PrivacyPolicy} />
+                        <Route path="/ContactUs" component={ContactUs} />
+                        <Route path="/EditProduct/:productId" component={EditProduct} />
                         <LoggedInAdminRoute exact path="/AdminPage" component={AdminPage} />
                         <LoggedInRoute exact path="/AddProduct" component={AddProduct} />
                         <LoggedInRoute exact path="/EditProduct" component={EditProduct} />
                         <LoggedInRoute exact path="/DeleteProduct" component={DeleteProduct} />
                     </Switch>
+                    <Footer />
                 </div>
             </BrowserRouter>
         )

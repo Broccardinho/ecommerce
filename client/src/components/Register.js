@@ -77,7 +77,7 @@ class Register extends Component {
 
         axios.post(`${SERVER_HOST}/users/register`, userData)
             .then(response => {
-                if (response.status === 200){
+                if (response.status === 201){
                     this.setState({isRegistered:true})
                 }
             })
@@ -105,7 +105,7 @@ class Register extends Component {
                     ref = {(input) => { this.inputToFocus = input }}
                 />
                 {this.state.errors.firstName && <div className="error"> {this.state.errors.firstName} </div>}
-                    <br/>
+                <br/>
                 <input
                     name = "lastName"
                     type = "text"

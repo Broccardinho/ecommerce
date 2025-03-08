@@ -1,47 +1,43 @@
 import React, {Component} from "react"
 import axios from "axios"
-import { ACCESS_LEVEL_GUEST , SERVER_HOST } from "../config/global_constants"
+import {ACCESS_LEVEL_GUEST, SERVER_HOST} from "../config/global_constants"
 import {Redirect} from "react-router-dom"
 
 export default class Login extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             email: "",
             password: "",
             isLoggedIn: false,
             errorMessage: "",
+            errors: {}, // Add errors to state
         }
-        // this.handleSubmit = this.handleSubmit.bind(this)
-        // this.handleChange = this.handleChange.bind(this)
     }
 
-
     validate = () => {
-        const errors ={}
+        const errors = {}
         const {email, password} = this.state
         let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 
-        if(!email.trim()){
+        if (!email.trim()) {
             errors.email = "Email is required"
-        } else if (!emailRegex.test(email)){
+        } else if (!emailRegex.test(email)) {
             errors.email = "Invalid email format"
         }
-        if(!password.trim()){
+        if (!password.trim()) {
             errors.password = "Password is required"
         }
         return errors
     }
-
     handleChange = (e) => {
         this.setState({[e.target.name]: e.target.value})
     }
 
-    handleSubmit = (e) =>
-    {
+    handleSubmit = (e) => {
         e.preventDefault()
         const errors = this.validate()
-        if(Object.keys(errors).length > 0){
+        if (Object.keys(errors).length > 0) {
             this.setState({errors})
             return
         }
@@ -49,34 +45,35 @@ export default class Login extends Component {
         const credentials = {
             email: this.state.email,
             password: this.state.password,
-            redirect: sessionStorage.redirect || '/',
+            redirect: sessionStorage.redirect || "/",
         }
         console.log(credentials)
 
-        axios.post(`${SERVER_HOST}/users/login`, credentials)
-            .then(res => {
+        axios
+            .post(`${SERVER_HOST}/users/login`, credentials)
+            .then((res) => {
                 sessionStorage.setItem("token", res.data.token)
-                sessionStorage.setItem("accessLevel", res.data.accessLevel || ACCESS_LEVEL_GUEST)
+                sessionStorage.setItem("accessLevel", res.data.accessLevel.toString() || ACCESS_LEVEL_GUEST)
 
+                // Optional: Store user details
                 sessionStorage.firstName = res.data.firstName
                 sessionStorage.lastName = res.data.lastName
                 sessionStorage.email = res.data.email
-                this.setState({ isLoggedIn: true })
+
+                this.setState({isLoggedIn: true})
             })
-            .catch(error =>{
-                this.setState({errorMessage: error.response?.data?.message || 'Login failed'})
+            .catch((error) => {
+                this.setState({errorMessage: error.response?.data?.message || "Login failed"})
             })
     }
 
     render() {
-        if(this.state.isLoggedIn){
-            return <Redirect to='/' />
+        if (this.state.isLoggedIn) {
+            return <Redirect to="/"/>
         }
         return (
             <div className="login-container">
                 <h2>Login</h2>
-
-                {this.state.isLoggedIn ? <Redirect to="/"/> : null}
 
                 {this.state.errorMessage && <p className="errorMessage">{this.state.errorMessage}</p>}
                 <form onSubmit={this.handleSubmit} noValidate>
@@ -89,22 +86,24 @@ export default class Login extends Component {
                             value={this.state.email}
                             onChange={this.handleChange}
                             required
-                            />
+                        />
                         {this.state.errors?.email && <div className="error">{this.state.errors.email}</div>}
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
                         <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={this.state.password}
-                        onChange={this.handleChange}
-                        required
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={this.state.password}
+                            onChange={this.handleChange}
+                            required
                         />
                         {this.state.errors?.password && <div className="error">{this.state.errors.password}</div>}
                     </div>
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button type="submit" className="btn btn-primary">
+                        Login
+                    </button>
                 </form>
             </div>
         )
