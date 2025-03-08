@@ -19,6 +19,7 @@ const TermsAndConditions = () => {
             </p>
             <h2>3. Limitation of Liability</h2>
             <p>
+                {/*test*/}
                 We are not liable for any damages arising from the use of this site, including but not limited to direct, indirect, incidental, or consequential damages.
             </p>
         </div>
