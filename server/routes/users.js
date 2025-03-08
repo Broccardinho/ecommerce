@@ -25,7 +25,7 @@ router.post(`/register`, async (req, res) => {
                 return res.status(409).json({message: 'User already exists'})
             }
 
-            const hashedPass = await bcrypt.hash(password, 10)// Ensure this is hashing correctly
+            const hashedPass = await bcrypt.hash(password, 10)
 
             const newUser = new User({
                 firstName,
@@ -76,7 +76,7 @@ router.post(`/login`, async (req, res) => {
 
             const token = jwt.sign(
                 {userID: user._id, email: user.email, accessLevel: user.accessLevel},
-                JWT_SECRET_KEY,
+                process.env.JWT_SECRET_KEY,
                 {algorithm: "HS256", expiresIn: '1h'}
             )
 

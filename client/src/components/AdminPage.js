@@ -2,7 +2,7 @@ import React from "react"
 import { Redirect, Route } from "react-router-dom"
 
 const AdminPage = () => {
-    const accessLevel = localStorage.getItem("accessLevel")
+    const accessLevel = sessionStorage.getItem("accessLevel")
 
 if (accessLevel !== "2") {
     return <Redirect to="/"/>

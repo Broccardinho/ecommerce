@@ -22,9 +22,9 @@ export default class Header extends Component {
 
                     <SearchBar />
 
-                    <Link to="/cart">
-                        <CartIcon />
-                    </Link>
+                    {/*<Link to="/cart">*/}
+                    {/*    <CartIcon />*/}
+                    {/*</Link>*/}
                 </nav>
             </header>
         )
