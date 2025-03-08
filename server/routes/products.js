@@ -4,6 +4,7 @@ const {isAdmin} = require("../middleware/auth");
 
 // Get all products from `/products` route
 router.get('/products', async (req, res) => {
+    console.log("line 17")
     try {
         const data = await Product.find(); // Use async/await
         res.json(data);

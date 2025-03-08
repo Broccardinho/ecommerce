@@ -10,7 +10,12 @@ class Products extends Component {
         this.state = {
             products: [],
             originalProducts: [],
-        }
+            searchInput: '',
+            sortOrder: 'none',
+            sortField: 'none',
+            brandFilter: '',
+            categoryFilter: ''
+        };
     }
 
     componentDidMount() {
@@ -73,8 +78,54 @@ class Products extends Component {
         }
     }
 
+    handleSearchChange = e => {
+        this.setState({ searchInput: e.target.value.toLowerCase() }, this.applyFilters);
+    };
+
+    handleSortOrderChange = e => {
+        const [sortOrder, sortField] = e.target.value.split('-');
+        this.setState({ sortOrder, sortField }, this.applyFilters);
+    };
+
+    handleBrandChange = e => {
+        this.setState({ brandFilter: e.target.value }, this.applyFilters);
+    };
+
+    handleCategoryChange = e => {
+        this.setState({ categoryFilter: e.target.value }, this.applyFilters);
+    };
+
+    applyFilters = () => {
+        const { originalProducts, searchInput, sortOrder, sortField, brandFilter, categoryFilter } = this.state;
+
+        let filteredProducts = originalProducts.filter(product =>
+            (product.name.toLowerCase().includes(searchInput) ||
+                product.category.toLowerCase().includes(searchInput) ||
+                product.brand.toLowerCase().includes(searchInput)) &&
+            (brandFilter === '' || product.brand === brandFilter) &&
+            (categoryFilter === '' || product.category === categoryFilter)
+        );
+//
+        if (sortField !== 'none' && sortOrder !== 'none') {
+            filteredProducts.sort((a, b) => {
+                const aValue = parseFloat(a[sortField]);
+                const bValue = parseFloat(b[sortField]);
+                if (sortOrder === 'asc') {
+                    return aValue - bValue;
+                } else {
+                    return bValue - aValue;
+                }
+            });
+        }
+
+        this.setState({ products: filteredProducts });
+    };
+
     render() {
         const accessLevel = parseInt(sessionStorage.accessLevel, 10) || ACCESS_LEVEL_GUEST
+        const { products, searchInput, brandFilter, categoryFilter } = this.state;
+        const uniqueBrands = [...new Set(this.state.originalProducts.map(product => product.brand))];
+        const uniqueCategories = [...new Set(this.state.originalProducts.map(product => product.category))];
 
         // Debugging logs
         console.log("Access Level in Products:", accessLevel)
@@ -82,6 +133,32 @@ class Products extends Component {
 
         return (
             <div>
+                <input type="text" placeholder="Search products..." onChange={this.handleSearchChange} />
+
+                {/* Brand Filter by Cal*/}
+                <select value={brandFilter} onChange={this.handleBrandChange}>
+                    <option value="">All Brands</option>
+                    {uniqueBrands.map(brand => (
+                        <option key={brand} value={brand}>{brand}</option>
+                    ))}
+                </select>
+
+                {/* Category Filter by Cal*/}
+                <select value={categoryFilter} onChange={this.handleCategoryChange}>
+                    <option value="">All Categories</option>
+                    {uniqueCategories.map(category => (
+                        <option key={category} value={category}>{category}</option>
+                    ))}
+                </select>
+
+                <select onChange={this.handleSortOrderChange}>
+                    <option value="none-none">Default Sorting</option>
+                    <option value="asc-price">Price: Low to High</option>
+                    <option value="desc-price">Price: High to Low</option>
+                    <option value="asc-stock">Stock: Low to High</option>
+                    <option value="desc-stock">Stock: High to Low</option>
+                </select>
+
                     <div className="cards-container">
                         {this.state.products.map((product, index) => (
                             <div
@@ -89,12 +166,12 @@ class Products extends Component {
                                 key={index}
                                 onClick={() => this.handleProductClick(product._id)}
                             >
-                                <p>{product["name"]}</p>
-                                <p>{product["category"]}</p>
-                                <img src={product.imgURL} alt={product.name} width="200"/>
-                                <p>{product["price"]}</p>
-                                <p>{product["brand"]}</p>
-                                <p>{product["stock"]}</p>
+                                <p>{product.name}</p>
+                                <p>{product.category}</p>
+                                <img src={product.imgURL} alt={product.name} width="200" />
+                                <p>{product.price}</p>
+                                <p>{product.brand}</p>
+                                <p>{product.stock}</p>
                                 {accessLevel === ACCESS_LEVEL_ADMIN ? (
                                     <div>
                                         <button className="btn btn-warning"

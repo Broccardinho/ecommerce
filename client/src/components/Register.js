@@ -105,7 +105,7 @@ class Register extends Component {
                     ref = {(input) => { this.inputToFocus = input }}
                 />
                 {this.state.errors.firstName && <div className="error"> {this.state.errors.firstName} </div>}
-                    <br/>
+                <br/>
                 <input
                     name = "lastName"
                     type = "text"

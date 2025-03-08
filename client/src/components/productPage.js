@@ -45,19 +45,18 @@ export default class ProductsPage extends Component {
         }
         return (
             <div>
-                    <div className="cards-container" >
-
-                            <div className="card" key={product.id}>
-                                <p>{product["name"]}</p>
-                                <p>{product["category"]}</p>
-                                <img src={product.imgURL} alt={product.name} width="200" />
-                                <p>{product["price"]}</p>
-                                <p>{product["brand"]}</p>
-                                <p>{product["stock"]}</p>
-                                {/*<p>{product["description"]}</p>*/}
-                            </div>
-            </div>
-
+                <div className="cards-container">
+                    <div className="card" key={product.id}>
+                        <p>{product.name}</p>
+                        <p>{product.category}</p>
+                        <img src={product.imgURL} alt={product.name} width="200" />
+                        <p>{product.price}</p>
+                        <p>{product.brand}</p>
+                        <p>{product.stock}</p>
+                        <p>{product.description}</p>
+                        {/*<p><Checkout price={product.price} /></p>*/}
+                    </div>
+                </div>
                 <h1>----------</h1>
                 <Link to="/">Go Home</Link>
             </div>
