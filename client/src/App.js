@@ -18,10 +18,9 @@ import TermsAndConditions from "./components/TermsAndConditions";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import ContactUs from "./components/ContactUs";
 import AboutUs from "./components/AboutUs";
-
-import "./css/App.css"
-import "./scss/styles.css"
 import LoggedInAdminRoute from "./components/LoggedInAdminRoute";
+
+import "./scss/styles.scss"
 
 if (typeof localStorage.accessLevel === "undefined") {
     localStorage.name = "GUEST"
@@ -49,6 +48,7 @@ export default class App extends Component
                         <Route path="/PrivacyPolicy" component={PrivacyPolicy} />
                         <Route path="/ContactUs" component={ContactUs} />
                         <Route path="/AboutUs" component={AboutUs}/>
+                        <Route path="/admin" component={AdminPage} />
                         <Route path="/EditProduct/:productId" component={EditProduct} />
                         <LoggedInAdminRoute exact path="/AdminPage" component={AdminPage} />
                         <LoggedInRoute exact path="/AddProduct" component={AddProduct} />

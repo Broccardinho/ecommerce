@@ -12,7 +12,7 @@ const AboutUs = () => {
                 <div className="about-section">
                     <h2>Who We Are</h2>
                     <p>
-                        Welcome to <strong>Melody Mart</strong>, Ireland's premier destination for high-quality musical instruments.
+                        Welcome to <strong>PianoVibe</strong>, Ireland's premier destination for high-quality musical instruments.
                         Based in the heart of Dublin, we are passionate about bringing the joy of music to everyone.
                         Whether you're a beginner picking up your first instrument or a seasoned musician looking for an upgrade,
                         we’ve got you covered.
@@ -22,7 +22,7 @@ const AboutUs = () => {
                 <div className="about-section">
                     <h2>Our Mission</h2>
                     <p>
-                        At Melody Mart, our mission is simple: to provide the finest musical instruments and accessories
+                        At PianoVibe, our mission is simple: to provide the finest musical instruments and accessories
                         at affordable prices. We believe that music is a universal language, and everyone deserves access
                         to the tools they need to express themselves. From pianos and guitars to violins and beyond,
                         we curate our collection with care to ensure every product meets our high standards.
@@ -69,9 +69,9 @@ const AboutUs = () => {
                         music lovers.
                     </p>
                     <p>
-                        <strong>Address</strong>: 123 Music Lane, Dublin, Ireland<br />
+                        <strong>Address</strong>: 123 quays, Dublin, Ireland<br />
                         <strong>Phone</strong>: +353 1 234 5678<br />
-                        <strong>Email</strong>: info@melodymart.com
+                        <strong>Email</strong>: info@pianovibe.com
                     </p>
                 </div>
             </div>

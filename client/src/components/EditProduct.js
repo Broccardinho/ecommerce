@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {SERVER_HOST} from "../config/global_constants";
 import {Redirect, withRouter} from "react-router-dom";
+import "../scss/alex_styles.scss"
 
 class EditProduct extends Component {
     constructor(props) {

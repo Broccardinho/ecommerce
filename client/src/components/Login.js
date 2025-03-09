@@ -56,13 +56,14 @@ export default class Login extends Component {
                 sessionStorage.setItem("token", res.data.token)
                 sessionStorage.setItem("accessLevel", res.data.accessLevel.toString() || ACCESS_LEVEL_GUEST)
 
-                // Optional: Store user details
                 sessionStorage.firstName = res.data.firstName
                 sessionStorage.lastName = res.data.lastName
                 sessionStorage.email = res.data.email
 
-
-                this.setState({isLoggedIn: true})
+                this.setState({isLoggedIn: true}, () => {
+                    window.location.reload()
+                    window.location.href = "/"
+                })
             })
             .catch((error) => {
                 this.setState({errorMessage: error.response?.data?.message || "Login failed"})
