@@ -121,6 +121,7 @@ class Products extends Component {
         this.setState({ products: filteredProducts });
     };
 
+
     render() {
         const accessLevel = parseInt(sessionStorage.accessLevel, 10) || ACCESS_LEVEL_GUEST;
         const { products, searchInput, brandFilter, categoryFilter } = this.state;
@@ -166,37 +167,35 @@ class Products extends Component {
                                 key={index}
                                 onClick={() => this.handleProductClick(product._id)}
                             >
-                                <p>{product.name}</p>
-                                <p>{product.category}</p>
-                                <img src={product.imgURL} alt={product.name} width="200" />
-                                <p>{product.price}</p>
-                                <p>{product.brand}</p>
-                                <p>{product.stock}</p>
                                 {accessLevel === ACCESS_LEVEL_ADMIN ? (
-                                    <div>
+                                    <div className="admin-buttons">
                                         <button
-                                            className="btn btn-warning"
-                                            onClick={() => this.props.history.push(`/EditProduct/${product._id}`)}
+                                            className="btn-edit"
+                                            onClick={(e) => { e.stopPropagation(); this.handleEditClick(product._id, e); }}
                                         >
                                             Edit Product
                                         </button>
                                         <button
-                                            className="btn btn-danger"
+                                            className="btn-delete"
                                             onClick={(e) => { e.stopPropagation(); this.deleteProduct(product._id); }}
                                         >
                                             Delete
                                         </button>
                                     </div>
                                 ) : null}
+                                <p>{product.name}</p>
+                                <p>{product.category}</p>
+                                <img src={product.imgURL} alt={product.name} width="200" />
+                                <p>{product.price}</p>
+                                <p>{product.brand}</p>
+                                <p>{product.stock}</p>
                             </div>
                         ))}
                     </div>
-                    <h1>----------</h1>
-                    <Link to="/">Go Home</Link>
                 </div>
             </div>
         );
     }
 }
 
-export default withRouter(Products)
+export default withRouter(Products);

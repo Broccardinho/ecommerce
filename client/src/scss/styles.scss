@@ -5,40 +5,112 @@ body {
   background-color: #1A1A1A;
 }
 
+/* Home Page Cards */
+.home-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+
+  .home-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    width: 300px;
+    height: 230px;
+    text-align: center;
+    border: 3px solid gold;
+    background: #444;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    img {
+      max-width: 100%;
+      max-height: 200px;
+      display: block;
+      margin: auto;
+      border: 3px solid gold;
+      border-radius: 8px;
+    }
+
+    p {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    &:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* About Section */
+.about-section {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #333;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  h2 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .about-link {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: gold;
+    color: #1A1A1A;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken(gold, 10%);
+    }
+  }
+}
+
 /* Main page container */
 .page-container {
-  display: flex; /* Flexbox layout for side-by-side sections */
+  display: flex;
   padding: 20px;
-  gap: 20px; /* Space between the filters and products section */
+  gap: 20px;
 }
 
 /* Filters container */
 .filters-container {
-  width: 400px; /* Further increased width for filters */
-  background-color: #333; /* Optional background color */
+  width: 400px;
+  background-color: #333;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  gap: 25px; /* Increased space between filter items */
-}
+  gap: 25px;
 
-/* Style for input fields and selects inside filters */
-.filters-container input,
-.filters-container select {
-  width: calc(100% - 24px); /* Adjusted width to account for padding */
-  padding: 12px; /* Increased padding for better spacing */
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box; /* Ensure padding is included in the width */
+  input, select {
+    width: calc(100% - 24px);
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
 }
 
 /* Products container */
 .products-container {
-  flex-grow: 1; /* Take up remaining space */
-  max-width: calc(100% - 440px); /* Adjusted to leave more space for the sidebar */
+  flex-grow: 1;
+  max-width: calc(100% - 440px);
   padding: 20px;
   background-color: #222;
   border-radius: 8px;
@@ -48,25 +120,27 @@ body {
 /* Cards container */
 .cards-container {
   display: flex;
-  justify-content: center; /* Center the cards horizontally */
-  align-items: flex-start; /* Align cards to the top */
+  justify-content: center;
+  align-items: flex-start;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-/* Individual card style */
+/* Individual cards */
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 250px; /* Fixed width for all cards */
-  height: 350px; /* Fixed height for all cards */
+  width: 250px;
+  height: 350px;
   text-align: center;
   border: 3px solid gold;
-  background: gray;
+  background: #DDDDDD;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distribute space evenly inside the card */
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
 
   img {
     max-width: 100%;
@@ -77,11 +151,46 @@ body {
   }
 
   p {
-    margin: 10px 0; /* Consistent margin for text */
+    margin: 10px 0;
   }
 
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  /* Admin Buttons */
+  .admin-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    .btn-edit, .btn-delete {
+      padding: 8px 16px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-edit {
+      background-color: gold;
+      color: #1A1A1A;
+
+      &:hover {
+        background-color: darken(gold, 10%);
+      }
+    }
+
+    .btn-delete {
+      background-color: #ff4d4d;
+      color: white;
+
+      &:hover {
+        background-color: darken(#ff4d4d, 10%);
+      }
+    }
   }
 }
 
@@ -106,4 +215,108 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+/* Product Page Container */
+.product-page-container {
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  background-color: #1A1A1A;
+  color: white;
+}
+
+/* ProductPage Image Section */
+.product-image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  img {
+    max-width: 100%;
+    max-height: 400px;
+    border: 3px solid gold;
+    border-radius: 8px;
+  }
+}
+
+/* Product Details Section */
+.product-details-section {
+  flex: 2;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .price {
+    font-size: 1.5rem;
+    color: gold;
+    margin-bottom: 20px;
+  }
+
+  .brand, .category, .stock {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .description {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: gold;
+      color: #1A1A1A;
+
+      &:hover {
+        background-color: darken(gold, 10%);
+      }
+    }
+  }
+}
+/* Responsive */
+@media (max-width: 500px) {
+  .login-container {
+    height: auto;
+    padding: 20px;
+  }
+
+  .login-box {
+    width: 90%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .page-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .filters-container {
+    width: 100%;
+  }
+
+  .products-container {
+    max-width: 100%;
+  }
 }
