@@ -122,43 +122,43 @@ class Products extends Component {
     };
 
     render() {
-        const accessLevel = parseInt(sessionStorage.accessLevel, 10) || ACCESS_LEVEL_GUEST
+        const accessLevel = parseInt(sessionStorage.accessLevel, 10) || ACCESS_LEVEL_GUEST;
         const { products, searchInput, brandFilter, categoryFilter } = this.state;
         const uniqueBrands = [...new Set(this.state.originalProducts.map(product => product.brand))];
         const uniqueCategories = [...new Set(this.state.originalProducts.map(product => product.category))];
 
-        // Debugging logs
-        console.log("Access Level in Products:", accessLevel)
-        console.log("ACCESS_LEVEL_ADMIN:", ACCESS_LEVEL_ADMIN)
-
         return (
-            <div>
-                <input type="text" placeholder="Search products..." onChange={this.handleSearchChange} />
+            <div className="page-container">
+                <div className="filters-container">
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        onChange={this.handleSearchChange}
+                    />
+                    <select value={brandFilter} onChange={this.handleBrandChange}>
+                        <option value="">All Brands</option>
+                        {uniqueBrands.map(brand => (
+                            <option key={brand} value={brand}>{brand}</option>
+                        ))}
+                    </select>
 
-                {/* Brand Filter by Cal*/}
-                <select value={brandFilter} onChange={this.handleBrandChange}>
-                    <option value="">All Brands</option>
-                    {uniqueBrands.map(brand => (
-                        <option key={brand} value={brand}>{brand}</option>
-                    ))}
-                </select>
+                    <select value={categoryFilter} onChange={this.handleCategoryChange}>
+                        <option value="">All Categories</option>
+                        {uniqueCategories.map(category => (
+                            <option key={category} value={category}>{category}</option>
+                        ))}
+                    </select>
 
-                {/* Category Filter by Cal*/}
-                <select value={categoryFilter} onChange={this.handleCategoryChange}>
-                    <option value="">All Categories</option>
-                    {uniqueCategories.map(category => (
-                        <option key={category} value={category}>{category}</option>
-                    ))}
-                </select>
+                    <select onChange={this.handleSortOrderChange}>
+                        <option value="none-none">Default Sorting</option>
+                        <option value="asc-price">Price: Low to High</option>
+                        <option value="desc-price">Price: High to Low</option>
+                        <option value="asc-stock">Stock: Low to High</option>
+                        <option value="desc-stock">Stock: High to Low</option>
+                    </select>
+                </div>
 
-                <select onChange={this.handleSortOrderChange}>
-                    <option value="none-none">Default Sorting</option>
-                    <option value="asc-price">Price: Low to High</option>
-                    <option value="desc-price">Price: High to Low</option>
-                    <option value="asc-stock">Stock: Low to High</option>
-                    <option value="desc-stock">Stock: High to Low</option>
-                </select>
-
+                <div className="products-container">
                     <div className="cards-container">
                         {this.state.products.map((product, index) => (
                             <div
@@ -174,12 +174,16 @@ class Products extends Component {
                                 <p>{product.stock}</p>
                                 {accessLevel === ACCESS_LEVEL_ADMIN ? (
                                     <div>
-                                        <button className="btn btn-warning"
-                                                onClick={() => this.props.history.push(`/EditProduct/${product._id}`)}>
+                                        <button
+                                            className="btn btn-warning"
+                                            onClick={() => this.props.history.push(`/EditProduct/${product._id}`)}
+                                        >
                                             Edit Product
                                         </button>
-                                        <button className="btn btn-danger"
-                                                onClick={(e) => {e.stopPropagation(); this.deleteProduct(product._id)}}>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={(e) => { e.stopPropagation(); this.deleteProduct(product._id); }}
+                                        >
                                             Delete
                                         </button>
                                     </div>
@@ -187,10 +191,11 @@ class Products extends Component {
                             </div>
                         ))}
                     </div>
-                <h1>----------</h1>
-                <Link to="/">Go Home</Link>
+                    <h1>----------</h1>
+                    <Link to="/">Go Home</Link>
+                </div>
             </div>
-        )
+        );
     }
 }
 

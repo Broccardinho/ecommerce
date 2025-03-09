@@ -5,6 +5,86 @@ body {
   background-color: #1A1A1A;
 }
 
+/* Main page container */
+.page-container {
+  display: flex; /* Flexbox layout for side-by-side sections */
+  padding: 20px;
+  gap: 20px; /* Space between the filters and products section */
+}
+
+/* Filters container */
+.filters-container {
+  width: 400px; /* Further increased width for filters */
+  background-color: #333; /* Optional background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Increased space between filter items */
+}
+
+/* Style for input fields and selects inside filters */
+.filters-container input,
+.filters-container select {
+  width: calc(100% - 24px); /* Adjusted width to account for padding */
+  padding: 12px; /* Increased padding for better spacing */
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensure padding is included in the width */
+}
+
+/* Products container */
+.products-container {
+  flex-grow: 1; /* Take up remaining space */
+  max-width: calc(100% - 440px); /* Adjusted to leave more space for the sidebar */
+  padding: 20px;
+  background-color: #222;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Cards container */
+.cards-container {
+  display: flex;
+  justify-content: center; /* Center the cards horizontally */
+  align-items: flex-start; /* Align cards to the top */
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Individual card style */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 250px; /* Fixed width for all cards */
+  height: 350px; /* Fixed height for all cards */
+  text-align: center;
+  border: 3px solid gold;
+  background: gray;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribute space evenly inside the card */
+
+  img {
+    max-width: 100%;
+    max-height: 150px;
+    display: block;
+    margin: auto;
+    border: 3px solid gold;
+  }
+
+  p {
+    margin: 10px 0; /* Consistent margin for text */
+  }
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+  }
+}
+
 /* Parallax Background */
 .parallax {
   background-image: url("https://st.hzcdn.com/simgs/pictures/living-rooms/bethesda-renovation-piano-room-and-library-paula-grace-designs-inc-img~a3b119770b63af2a_9-4253-1-143a258.jpg");
@@ -16,7 +96,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid gold; /* Add a gold border */
+  border: 3px solid gold;
 }
 
 /* Parallax Content */
@@ -26,36 +106,4 @@ body {
   font-size: 2.5rem;
   font-weight: bold;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-}
-
-/* Cards */
-.cards-container {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Align cards vertically */
-  gap: 20px; /* Space between cards */
-  flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  padding: 20px;
-}
-
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  width: 300px;
-  text-align: center;
-  border: 3px solid gold;
-  background: gray;
-  padding: 10px;
-
-  img {
-    max-width: 100%;
-    max-height: 150px;
-    display: block;
-    margin: auto;
-    border: 3px solid gold;
-  }
-
-  &:hover {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
-  }
 }
