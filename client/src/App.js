@@ -17,9 +17,8 @@ import Footer from "./components/Footer";
 import TermsAndConditions from "./components/TermsAndConditions";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import ContactUs from "./components/ContactUs";
+import AboutUs from "./components/AboutUs";
 
-
-import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
 import LoggedInAdminRoute from "./components/LoggedInAdminRoute";
 
@@ -41,13 +40,14 @@ export default class App extends Component
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route path="/Products" component={Products} />
-                        <Route path ="/productsPage" component={ProductsPage} />
+                        <Route path ="/productsPage/:productId" component={ProductsPage} />
                         <Route path="/Register" component={Register} />
                         <Route path="/Login" component={Login} />
                         <Route path="/Logout" component={Logout} />
                         <Route path="/TermsAndConditions" component={TermsAndConditions} />
                         <Route path="/PrivacyPolicy" component={PrivacyPolicy} />
                         <Route path="/ContactUs" component={ContactUs} />
+                        <Route path="/AboutUs" component={AboutUs}/>
                         <Route path="/EditProduct/:productId" component={EditProduct} />
                         <LoggedInAdminRoute exact path="/AdminPage" component={AdminPage} />
                         <LoggedInRoute exact path="/AddProduct" component={AddProduct} />

@@ -1,0 +1,520 @@
+$dark-bg: #1A1A1A;
+$card-bg: #FFFFFF;
+$text-color: #333333;
+$input-bg: #F9F9F9;
+$input-border: #DDDDDD;
+$primary-color: #D4AF37;
+$error-red: #D9534F;
+$header-bg: #2C2C2C;
+$header-text: #FFFFFF;
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $dark-bg;
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+
+  .auth-card {
+    display: flex;
+    flex-direction: column;
+    background-color: $card-bg;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid $primary-color;
+
+    h2 {
+      color: $text-color;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+
+      .form-group {
+        margin-bottom: 20px;
+
+        label {
+          font-weight: bold;
+          color: $text-color;
+          margin-bottom: 5px;
+          display: block;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+          width: 100%;
+          padding: 10px;
+          background-color: $input-bg;
+          border: 1px solid $input-border;
+          border-radius: 6px;
+          font-size: 16px;
+          color: $text-color;
+          margin-top: 5px;
+          box-sizing: border-box;
+
+          &:focus {
+            border-color: $primary-color;
+            outline: none;
+            box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+          }
+        }
+      }
+    }
+
+    .error {
+      color: $error-red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .errorMessage {
+      color: $error-red;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: $card-bg;
+      color: $text-color;
+      border: 2px solid $primary-color;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $primary-color;
+        color: $card-bg;
+      }
+    }
+
+    a {
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+
+.App-header {
+  background-color: $header-bg;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid $primary-color;
+
+  a {
+    text-decoration: none;
+    color: $header-text;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 20px;
+
+    h1 {
+      color: $header-text;
+      font-size: 24px;
+      font-weight: 600;
+      text-shadow: 0 0 2px $primary-color;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    a {
+      color: $header-text;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      text-shadow: 0 0 2px $primary-color;
+      transition: color 0.3s ease;
+      position: relative;
+
+      &:hover {
+        color: $primary-color;
+      }
+
+
+      &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: -10px;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 60%;
+        width: 1px;
+        background-color: $header-text;
+        opacity: 0.5;
+      }
+    }
+
+    h1 {
+      color: $header-text;
+      font-size: 24px;
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+}
+
+.footer {
+  background-color: $header-bg;
+  padding: 20px;
+  border-top: 2px solid $primary-color;
+  color: $header-text;
+  font-family: 'Poppins', sans-serif;
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    .footer-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+
+      img {
+        max-width: 100px;
+      }
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 600px;
+
+      .left-links,
+      .middle-links,
+      .right-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .left-links {
+        align-items: flex-start;
+      }
+
+      .middle-links,
+      .right-links {
+        align-items: center;
+      }
+
+      a {
+        color: $header-text;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 16px;
+        text-shadow: 0 0 2px $primary-color;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+
+    .copyright {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+      color: $header-text;
+      opacity: 0.8;
+    }
+  }
+}
+
+.about-us {
+  background-color: $card-bg;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+  color: $text-color;
+
+  .about-us-content {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      color: $primary-color;
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 500;
+      color: $text-color;
+      margin-bottom: 40px;
+    }
+
+    .about-section {
+      margin-bottom: 30px;
+
+      h2 {
+        font-size: 24px;
+        color: $primary-color;
+        margin-bottom: 10px;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+      }
+
+      ul {
+        list-style-type: disc;
+        padding-left: 20px;
+
+        li {
+          font-size: 16px;
+          line-height: 1.6;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+.contact-us-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $dark-bg;
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+
+  .contact-us-card {
+    background-color: $card-bg;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    border: 2px solid $primary-color;
+
+    h1 {
+      color: $text-color;
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .contact-info {
+      margin-bottom: 20px;
+      text-align: center;
+
+      h2 {
+        color: $primary-color;
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+
+      p {
+        color: $text-color;
+        font-size: 16px;
+        margin: 5px 0;
+      }
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+
+      label {
+        font-weight: bold;
+        color: $text-color;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        background-color: $input-bg;
+        border: 1px solid $input-border;
+        border-radius: 6px;
+        font-size: 16px;
+        color: $text-color;
+        margin-top: 5px;
+        box-sizing: border-box;
+
+        &:focus {
+          border-color: $primary-color;
+          outline: none;
+          box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+        }
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+    }
+
+    button {
+      background-color: $card-bg;
+      color: $text-color;
+      border: 2px solid $primary-color;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: $primary-color;
+        color: $card-bg;
+      }
+    }
+
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+
+.privacy-policy {
+  background-color: $card-bg;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+  color: $text-color;
+
+  .privacy-policy-content {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      color: $primary-color;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: $primary-color;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
+.terms-and-conditions {
+  background-color: $card-bg;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+  color: $text-color;
+
+  .terms-and-conditions-content {
+    max-width: 800px;
+    margin: 0 auto;
+
+    h1 {
+      text-align: center;
+      font-size: 36px;
+      color: $primary-color;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: 24px;
+      color: $primary-color;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      color: $primary-color;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: darken($primary-color, 10%);
+      }
+    }
+  }
+}
