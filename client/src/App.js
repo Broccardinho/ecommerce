@@ -20,6 +20,7 @@ import ContactUs from "./components/ContactUs";
 import AboutUs from "./components/AboutUs";
 
 import "./css/App.css"
+import "./scss/styles.css"
 import LoggedInAdminRoute from "./components/LoggedInAdminRoute";
 
 if (typeof localStorage.accessLevel === "undefined") {
