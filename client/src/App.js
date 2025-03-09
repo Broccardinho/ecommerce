@@ -17,10 +17,7 @@ import Footer from "./components/Footer";
 import TermsAndConditions from "./components/TermsAndConditions";
 import PrivacyPolicy from "./components/PrivacyPolicy";
 import ContactUs from "./components/ContactUs";
-
-
-import "bootstrap/dist/css/bootstrap.css"
-import "./css/App.css"
+import "./scss/styles.css"
 import LoggedInAdminRoute from "./components/LoggedInAdminRoute";
 
 if (typeof localStorage.accessLevel === "undefined") {

@@ -8,6 +8,9 @@
   max-width: 700px;
   margin: 0 auto;
 }
+body {
+    background-color: #f5f5f5; /* Light grey*/
+}
 
 .form-container
 {
@@ -96,45 +99,45 @@ color:pink;
 
 
 
-/* table of cars */
-.table-container table
-{
-    width:100%;
-    border-collapse:collapse;
-}
+/*!* table of cars *!*/
+/*.table-container table*/
+/*{*/
+/*    width:100%;*/
+/*    border-collapse:collapse;*/
+/*}*/
 
-.table-container thead
-{
-    background-color: #aaa;
-    color:#fff;
-    text-align: left;
-    text-transform: capitalize;
-}
+/*.table-container thead*/
+/*{*/
+/*    background-color: #aaa;*/
+/*    color:#fff;*/
+/*    text-align: left;*/
+/*    text-transform: capitalize;*/
+/*}*/
 
-.table-container tbody tr
-{
-    height:3em;
-}
+/*.table-container tbody tr*/
+/*{*/
+/*    height:3em;*/
+/*}*/
 
-.table-container thead th,
-.table-container tbody td
-{
-    padding:5px;
-}
-.table-container tbody tr:nth-child(odd)
-{
-    background-color: #eee;
-}
+/*.table-container thead th,*/
+/*.table-container tbody td*/
+/*{*/
+/*    padding:5px;*/
+/*}*/
+/*.table-container tbody tr:nth-child(odd)*/
+/*{*/
+/*    background-color: #eee;*/
+/*}*/
 
-.table-container tbody tr:nth-child(even)
-{
-    background-color: #ffa;
-}
+/*.table-container tbody tr:nth-child(even)*/
+/*{*/
+/*    background-color: #ffa;*/
+/*}*/
 
-.add-new-car
-{
-    margin-top:1em;
-}
+/*.add-new-car*/
+/*{*/
+/*    margin-top:1em;*/
+/*}*/
 /*end of table of cars */
 
 /*Cards - Cal*/
