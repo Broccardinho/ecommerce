@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "../scss/alex_styles.scss"; // Ensure you import the SCSS file
+import "../scss/alex_styles.scss";
 
 const ContactUs = () => {
     const [formData, setFormData] = useState({
@@ -36,8 +36,8 @@ const ContactUs = () => {
                 <div className="contact-info">
                     <h2>Get in Touch</h2>
                     <p><strong>Phone:</strong> +353 1 234 5678</p>
-                    <p><strong>Email:</strong> info@melodymart.com</p>
-                    <p><strong>Address:</strong> 123 Music Lane, Dublin, Ireland</p>
+                    <p><strong>Email:</strong> info@pianovibe.com</p>
+                    <p><strong>Address:</strong> 123 quays, Dublin, Ireland</p>
                 </div>
 
                 {/* Contact Form */}
