@@ -47,7 +47,7 @@ export default class App extends Component
                         <Route path="/TermsAndConditions" component={TermsAndConditions} />
                         <Route path="/PrivacyPolicy" component={PrivacyPolicy} />
                         <Route path="/ContactUs" component={ContactUs} />
-                        <Route path="/AboutUs" component={AboutUs}/>
+                        <Route path="/aboutus" component={AboutUs}/>
                         <Route path="/admin" component={AdminPage} />
                         <Route path="/EditProduct/:productId" component={EditProduct} />
                         <LoggedInAdminRoute exact path="/AdminPage" component={AdminPage} />
