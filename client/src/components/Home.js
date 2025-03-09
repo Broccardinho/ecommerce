@@ -35,7 +35,7 @@ export default class Home extends Component {
                 </div>
 
                 {/* About Section */}
-                <div className="about-section">
+                <div className="about-section-home">
                     <h2>Read More About Us Here</h2>
                     <Link to="/AboutUs" className="about-link">Learn More</Link>
                 </div>

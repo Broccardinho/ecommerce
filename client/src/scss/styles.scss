@@ -50,32 +50,32 @@ body {
 }
 
 ///* About Section */
-//.about-section {
-//  text-align: center;
-//  padding: 40px 20px;
-//  margin-top: 20px;
-//  border-radius: 8px;
-//
-//  h2 {
-//    font-size: 2rem;
-//    color: white;
-//    margin-bottom: 20px;
-//  }
-//
-//  .about-link {
-//    padding: 10px 20px;
-//    font-size: 1.2rem;
-//    background-color: gold;
-//    color: #1A1A1A;
-//    text-decoration: none;
-//    border-radius: 5px;
-//    transition: background-color 0.3s;
-//
-//    &:hover {
-//      background-color: darken(gold, 10%);
-//    }
-//  }
-//}
+.about-section-home {
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+
+  h2 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 20px;
+  }
+
+  .about-link {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: gold;
+    color: #1A1A1A;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: darken(gold, 10%);
+    }
+  }
+}
 
 /* Main page container */
 .page-container {
