@@ -54,7 +54,6 @@ export default class ProductsPage extends Component {
                         <p>{product.brand}</p>
                         <p>{product.stock}</p>
                         <p>{product.description}</p>
-                        {/*<p><Checkout price={product.price} /></p>*/}
                     </div>
                 </div>
                 <h1>----------</h1>

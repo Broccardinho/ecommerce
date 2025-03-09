@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import axios from "axios"
 import {ACCESS_LEVEL_GUEST, SERVER_HOST} from "../config/global_constants"
 import {Redirect} from "react-router-dom"
+import "../scss/alex_styles.scss"
 
 export default class Login extends Component {
     constructor(props) {
@@ -60,6 +61,7 @@ export default class Login extends Component {
                 sessionStorage.lastName = res.data.lastName
                 sessionStorage.email = res.data.email
 
+
                 this.setState({isLoggedIn: true})
             })
             .catch((error) => {
@@ -72,39 +74,38 @@ export default class Login extends Component {
             return <Redirect to="/"/>
         }
         return (
-            <div className="login-container">
-                <h2>Login</h2>
-
-                {this.state.errorMessage && <p className="errorMessage">{this.state.errorMessage}</p>}
-                <form onSubmit={this.handleSubmit} noValidate>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            required
-                        />
-                        {this.state.errors?.email && <div className="error">{this.state.errors.email}</div>}
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            required
-                        />
-                        {this.state.errors?.password && <div className="error">{this.state.errors.password}</div>}
-                    </div>
-                    <button type="submit" className="btn btn-primary">
-                        Login
-                    </button>
-                </form>
+            <div className="auth-container">
+                <div className="auth-card">
+                    <h2>Login</h2>
+                    {this.state.errorMessage && <p className="errorMessage">{this.state.errorMessage}</p>}
+                    <form onSubmit={this.handleSubmit} noValidate>
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                                required
+                            />
+                            {this.state.errors?.email && <div className="error">{this.state.errors.email}</div>}
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="password">Password</label>
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                required
+                            />
+                            {this.state.errors?.password && <div className="error">{this.state.errors.password}</div>}
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
             </div>
         )
     }
